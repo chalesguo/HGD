@@ -1,0 +1,60 @@
+GPUId: 0
+Seed: 3407
+
+# Path
+DataPath: ../HGD_code/datasets    #
+TextPath: /datasets/ml5000 # oasis OASIS Cloth  Cloth_part  Shengna_part  192oa mianliao ml5000
+CheckpointsPath: ../checkpoints/results
+
+# Data Structure
+MovingTimePoint: ES   #
+FixedTimePoint: ED    #
+ImgSize: [192, 192]    #oasis[192, 192]
+
+# Network Setup
+ModelType: VoxelMorph   #
+BackBone: UNet
+FeatNum:
+  - 16
+  - 32
+  - 64
+  - 128
+  - 256
+IntegrateConfig:
+  UseIntegrate: False
+  TimeStep: 8
+
+# Optimization for Training
+InitWeight: null   #
+LearningRate: 0.001       #
+WeightDecay: 0.0         #
+BatchSize: 6         #oa last:12  ml4:12 last:8/6
+NumWorkers: 0      #
+StartEpoch: 1       #
+NumEpoch: 30         #
+ValFreq: 3       #
+SimLoss: MSE           #
+RegLoss: Grad          #
+#GradientSurgery: OrsGrad   # OrsGrad  PCGrad  RtGrad null LayerWise
+GradientSurgery: OrsGrad   #  OrsGrad  AvgGrad  OrrGrad AvgGrad OrsGrad
+LossWeight:
+  Similarity: 1
+  Smoothness: 1
+
+# Evaluation
+LabelMapping:
+    1: 'RV'
+    2: 'Myo'
+    3: 'LV'
+#LabelMapping:
+#    1: 'LV'
+#    2: 'Myo'
+#    3: 'RV'
+EfficientSave: True
+LoadChoice: last
+
+# XIAOOU
+Model: vm1 #vm2
+Vol_size: [512, 512]
+iter: 4
+datasets: OASIS_spcg1
